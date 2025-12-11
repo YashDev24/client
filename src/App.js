@@ -6,6 +6,7 @@ function App() {
 
   // Load todos from backend
   useEffect(() => {
+    alert("Deploying to GKE using Cloud Build!");
     fetchTodos();
   }, []);
 
