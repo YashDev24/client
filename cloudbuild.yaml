@@ -29,7 +29,7 @@ steps:
       ]
     env:
       - "CLOUDSDK_COMPUTE_REGION=us-central1"
-      - "CLOUDSDK_CONTAINER_CLUSTER=CLUSTER_NAME"
+      - "CLOUDSDK_CONTAINER_CLUSTER=cluster-1"
 
 images:
   - "us-central1-docker.pkg.dev/rich-city-477617-e9/frontend-repo/frontend:$SHORT_SHA"
