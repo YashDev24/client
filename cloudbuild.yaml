@@ -1,0 +1,35 @@
+steps:
+  # Build docker image
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "build",
+        "-t",
+        "us-central1-docker.pkg.dev/rich-city-477617-e9/frontend-repo/frontend:$SHORT_SHA",
+        ".",
+      ]
+
+  # Push image
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      [
+        "push",
+        "us-central1-docker.pkg.dev/rich-city-477617-e9/frontend-repo/frontend:$SHORT_SHA",
+      ]
+
+  # Deploy to GKE
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "kubectl",
+        "set",
+        "image",
+        "deployment/frontend",
+        "frontend=us-central1-docker.pkg.dev/rich-city-477617-e9/frontend-repo/frontend:$SHORT_SHA",
+      ]
+    env:
+      - "CLOUDSDK_COMPUTE_REGION=us-central1"
+      - "CLOUDSDK_CONTAINER_CLUSTER=CLUSTER_NAME"
+
+images:
+  - "us-central1-docker.pkg.dev/rich-city-477617-e9/frontend-repo/frontend:$SHORT_SHA"
